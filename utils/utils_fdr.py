@@ -1,0 +1,54 @@
+import FinanceDataReader as fdr
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+
+def get_comp_info(stock_market_info: dict) -> dict:
+    '''
+
+    Parameters
+    ----------
+    stock_market_info: dict
+
+    Returns
+    -------
+    result: dict
+    '''
+
+
+
+    result = {}
+    for country in stock_market_info.keys():
+
+        result[country] = {}
+
+        for market in stock_market_info[country]:
+            listed_comp_df = fdr.StockListing(market)
+            listed_comp_df['comp_id'] = listed_comp_df['Symbol'] + ' : ' + listed_comp_df['Name']
+            listed_comp_df.sort_values(by='comp_id', ascending=True, inplace=True)
+            listed_comp_df.reset_index(drop=True, inplace=True)
+            listed_comp_df.set_index(keys='comp_id', inplace=True)
+            result[country][market] = listed_comp_df.to_dict(orient='index')
+
+    return result
+
+
+def get_stock_data(comp_info:dict, days=30):
+    '''
+
+    Parameters
+    ----------
+    comp_info : dict
+    days : int
+
+    Returns
+    -------
+    data : pandas dataframe
+    '''
+    code = comp_info['Symbol']
+
+    date_st = str(datetime.now() - relativedelta(days=days))[:10]
+    date_ed = str(datetime.now())[:10]
+
+    data = fdr.DataReader(code, date_st, date_ed)
+    return data

@@ -1,10 +1,8 @@
 import streamlit as st
 from utils.utils import read_json, download_df
 from utils.utils_fdr import get_comp_info, get_stock_data
+import time
 
-# Todo
-# Save all listed companies in all market at the beginning of the app
-# and save it in st.cache decorator
 
 @st.cache(show_spinner=False)
 def load_comp_list():
@@ -23,8 +21,10 @@ def get_target_comp_info(comp_info_all: dict):
 
 def main():
     st.title("Stockprice Data Downloader")
+    time_st = time.time()
     with st.spinner('Loading App ... (This takes 1~2 min. Hang in there!)'):
         load_comp_list()
+    st.markdown("__Loading time: `{}` sec__".format(time.time() - time_st)
 
     comp_info = get_target_comp_info(st.session_state['comp_info'])
     num_month = st.slider('Select months', 1, 36, step=3)
@@ -35,4 +35,5 @@ def main():
     download_df(data, filename)
 
 if __name__ == "__main__":
+     
     main()

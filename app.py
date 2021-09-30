@@ -7,7 +7,8 @@ import time
 @st.cache(show_spinner=False)
 def load_comp_list():
     stock_const = read_json('app_config.json')['market']
-    st.session_state['comp_info'] = get_comp_info(stock_const)
+    if 'comp_info' not in st.session_state:
+        st.session_state['comp_info'] = get_comp_info(stock_const)
 
 def get_target_comp_info(comp_info_all: dict):
 

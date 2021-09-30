@@ -1,7 +1,10 @@
-import FinanceDataReader as fdr
+import streamlit as st
+
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import time
 
+import FinanceDataReader as fdr
 
 def get_comp_info(stock_market_info: dict) -> dict:
     '''
@@ -16,7 +19,7 @@ def get_comp_info(stock_market_info: dict) -> dict:
     '''
 
 
-
+    time_st = time.time()
     result = {}
     for country in stock_market_info.keys():
 
@@ -29,6 +32,8 @@ def get_comp_info(stock_market_info: dict) -> dict:
             listed_comp_df.reset_index(drop=True, inplace=True)
             listed_comp_df.set_index(keys='comp_id', inplace=True)
             result[country][market] = listed_comp_df.to_dict(orient='index')
+
+    st.markdown("Loading time: `{}` sec".format(time.time() - time_st))
 
     return result
 

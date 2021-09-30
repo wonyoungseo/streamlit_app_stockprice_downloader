@@ -24,7 +24,7 @@ def main():
     time_st = time.time()
     with st.spinner('Loading App ... (This takes 1~2 min. Hang in there!)'):
         load_comp_list()
-    st.markdown("__Loading time: `{}` sec__".format(time.time() - time_st)
+    st.markdown("__Loading time: `{}` sec__".format(time.time() - time_st))
 
     comp_info = get_target_comp_info(st.session_state['comp_info'])
     num_month = st.slider('Select months', 1, 36, step=3)

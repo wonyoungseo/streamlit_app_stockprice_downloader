@@ -28,7 +28,7 @@ def main():
 
     comp_info = get_target_comp_info(st.session_state['comp_info'])
     num_month = st.slider('Select months', 1, 36, step=3)
-    data = get_stock_data(comp_info, time_range = num_month*30)
+    data = get_stock_data(comp_info, days = num_month*30)
     st.markdown("**Stock data ({} months) : {} ({})**".format(num_month, comp_info['Name'], comp_info['Symbol']))
     filename = 'stockprice_{}_{}_{}m'.format(comp_info['Symbol'], comp_info['Name'], num_month)
     st.dataframe(data)

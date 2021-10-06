@@ -29,6 +29,8 @@ def get_comp_info(stock_market_info: dict) -> dict:
             listed_comp_df.sort_values(by='comp_id', ascending=True, inplace=True)
             listed_comp_df.reset_index(drop=True, inplace=True)
             listed_comp_df.set_index(keys='comp_id', inplace=True)
+            if 'ListingDate' in listed_comp_df.columns:
+                listed_comp_df['ListingDate'] = listed_comp_df['ListingDate'].apply(lambda x: str(x)[:10])
             result[country][market] = listed_comp_df.to_dict(orient='index')
 
     print("Loading time: `{}` sec".format(time.time() - time_st))

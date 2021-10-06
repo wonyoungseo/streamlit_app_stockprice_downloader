@@ -1,6 +1,0 @@
-{
-  "market" : {
-    "USA" : ["NASDAQ", "SP500", "NYSE", "AMEX"],
-    "South Korea" : ["KOSPI", "KRX", "KOSDAQ", "KONEX"]
-  }
-}

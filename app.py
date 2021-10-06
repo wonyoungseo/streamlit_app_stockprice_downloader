@@ -4,11 +4,11 @@ from utils.utils_fdr import get_comp_info, get_stock_data
 import time
 
 
-@st.cache(show_spinner=False)
+@st.cache(suppress_st_warning=True)
 def load_comp_list():
-    stock_const = read_json('app_config.json')['market']
-    if 'comp_info' not in st.session_state:
-        st.session_state['comp_info'] = get_comp_info(stock_const)
+    stock_const = read_json('resource/stock_list.json')
+    return stock_const
+
 
 def get_target_comp_info(comp_info_all: dict):
 
@@ -22,18 +22,18 @@ def get_target_comp_info(comp_info_all: dict):
 
 def main():
     st.title("Stockprice Data Downloader")
-    
-    with st.spinner('Loading App ... (This takes 1~2 min. Hang in there!)'):
-        load_comp_list()
+    stock_list = load_comp_list()
 
-    comp_info = get_target_comp_info(st.session_state['comp_info'])
+    comp_info = get_target_comp_info(stock_list)
     num_month = st.slider('Select months', 1, 36, step=3)
-    data = get_stock_data(comp_info, days = num_month*30)
-    st.markdown("**Stock data ({} months) : {} ({})**".format(num_month, comp_info['Name'], comp_info['Symbol']))
-    filename = 'stockprice_{}_{}_{}m'.format(comp_info['Symbol'], comp_info['Name'], num_month)
-    st.dataframe(data)
-    download_df(data, filename)
+    try:
+        data = get_stock_data(comp_info, days = num_month*30)
+        st.markdown("**Stock data ({} months) : {} ({})**".format(num_month, comp_info['Name'], comp_info['Symbol']))
+        filename = 'stockprice_{}_{}_{}m'.format(comp_info['Symbol'], comp_info['Name'], num_month)
+        st.dataframe(data)
+        download_df(data, filename)
+    except ValueError:
+        st.warning("Company '{}' information currently not avaliable".format(comp_info['Symbol']))
 
 if __name__ == "__main__":
-     
     main()

@@ -4,7 +4,7 @@ from utils.utils_fdr import get_comp_info, get_stock_data
 import time
 
 
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True, show_spinner=False)
 def load_comp_list():
     stock_const = read_json('resource/stock_list.json')
     return stock_const

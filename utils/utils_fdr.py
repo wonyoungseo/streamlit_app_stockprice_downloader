@@ -56,4 +56,6 @@ def get_stock_data(comp_info:dict, days=30):
     date_ed = str(datetime.now())[:10]
 
     data = fdr.DataReader(code, date_st, date_ed)
+    data = data.reset_index(drop=False)
+    data['Date'] = data['Date'].apply(lambda x: str(x)[:10])
     return data

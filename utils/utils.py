@@ -49,4 +49,13 @@ def plot_candle(df):
                 )
     data = [candle_data]
     fig = go.Figure(data)
+    fig.update_layout(
+        margin=dict(
+                l=5,
+                r=5,
+                b=5,
+                t=5,
+                pad=4
+            ),
+        )
     st.plotly_chart(fig, use_container_width=True)

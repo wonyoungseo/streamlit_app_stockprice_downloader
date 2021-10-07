@@ -8,8 +8,7 @@ menu_items = {
     'Report a bug' : 'https://github.com/lucaseo/streamlit_app_stockprice_downloader/issues',
     'About' : '''
     ## Stock price downloader
-
-    Made with [Streamlit](https://streamlit.io/), [Financial-DataReader](https://www.notion.so/financedata/FinanceData-KR-6da3ac1cb8864178a4a61d9bc319cb53)
+    Download stock price data in US, South Korean stock market
     '''
 }
 
